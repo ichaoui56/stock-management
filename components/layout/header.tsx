@@ -20,7 +20,7 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   return (
-    <header className="h-16 bg-background border-b border-border px-6 flex items-center justify-between">
+    <header className="h-16 bg-sidebar mx-[15px] mt-[15px] rounded-xl border-border p-10 flex items-center justify-between">
       {/* Titre de la page */}
       <div>
         <h1 className="text-2xl font-bold text-foreground">{title}</h1>

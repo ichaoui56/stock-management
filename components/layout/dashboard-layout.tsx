@@ -20,8 +20,8 @@ export function DashboardLayout({ children, title, subtitle }: DashboardLayoutPr
         <Header title={title} subtitle={subtitle} />
 
         {/* Zone de contenu */}
-        <main className="flex-1 overflow-y-auto p-6">
-          <div className="max-w-7xl mx-auto">{children}</div>
+        <main className="flex-1 overflow-y-auto p-4">
+          <div className="max-w-7xl mx-auto bg-sidebar p-[20px] rounded-3xl">{children}</div>
         </main>
       </div>
     </div>

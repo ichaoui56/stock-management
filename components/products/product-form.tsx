@@ -20,7 +20,7 @@ export function ProductForm() {
   const [state, formAction] = useActionState(createProduct, initialState)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full">
       {/* Header */}
       <div className="flex items-center gap-4">
         <Link href="/produits">

@@ -55,9 +55,9 @@ export function Sidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="flex h-full w-64 flex-col bg-sidebar border-r border-sidebar-border">
+    <div className="flex h-[95%] w-64 flex-col rounded-3xl overflow-hidden my-[10px] ml-[15px] bg-sidebar  border-sidebar-border">
       {/* Logo */}
-      <div className="flex h-16 items-center px-6 border-b border-sidebar-border">
+      <div className="flex h-16 items-center px-6 border-sidebar-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
             <Package className="w-5 h-5 text-primary-foreground" />
