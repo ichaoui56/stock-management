@@ -12,6 +12,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { signOutAction } from "@/lib/actions/auth-actions"
+import { useSession } from "next-auth/react"
 
 interface HeaderProps {
   title: string
@@ -19,7 +21,13 @@ interface HeaderProps {
 }
 
 export function Header({ title, subtitle }: HeaderProps) {
+  const { data: session } = useSession()
+  const handleSignOut = async () => {
+    await signOutAction()
+  }
+
   return (
+    
     <header className="h-16 bg-sidebar mx-[15px] mt-[15px] rounded-xl border-border p-10 flex items-center justify-between">
       {/* Titre de la page */}
       <div>
@@ -55,12 +63,12 @@ export function Header({ title, subtitle }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="flex items-center gap-3 px-3 py-2 h-auto">
               <Avatar className="w-8 h-8">
-                <AvatarImage src="/admin-avatar.png" />
+                <AvatarImage src={session?.user?.image || "/admin-avatar.png"} />
                 <AvatarFallback className="bg-primary text-primary-foreground text-sm">AS</AvatarFallback>
               </Avatar>
               <div className="text-left">
-                <p className="text-sm font-medium text-foreground">Admin Système</p>
-                <p className="text-xs text-muted-foreground">admin@stockpro.com</p>
+                <p className="text-sm font-medium text-foreground">{session?.user?.name}</p>
+                <p className="text-xs text-muted-foreground">{session?.user?.email}</p>
               </div>
             </Button>
           </DropdownMenuTrigger>
@@ -71,7 +79,7 @@ export function Header({ title, subtitle }: HeaderProps) {
             <DropdownMenuItem>Paramètres</DropdownMenuItem>
             <DropdownMenuItem>Support</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive">Déconnexion</DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut} className="text-destructive">Déconnexion</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

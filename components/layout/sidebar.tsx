@@ -4,6 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { LayoutDashboard, Package, ShoppingCart, Warehouse, FileText, User, Settings, LogOut } from "lucide-react"
+import { SignOut } from "../auth/sign-out"
 
 const navigation = [
   {
@@ -44,11 +45,7 @@ const generalNavigation = [
     href: "/parametres",
     icon: Settings,
   },
-  {
-    name: "Déconnexion",
-    href: "/connexion",
-    icon: LogOut,
-  },
+
 ]
 
 export function Sidebar() {
@@ -74,7 +71,7 @@ export function Sidebar() {
             {navigation.map((item) => {
               const isActive = pathname === item.href
               return (
-                <li key={item.name}>
+                <li className="p-2" key={item.name}>
                   <Link
                     href={item.href}
                     className={cn(
@@ -99,7 +96,7 @@ export function Sidebar() {
             {generalNavigation.map((item) => {
               const isActive = pathname === item.href
               return (
-                <li key={item.name}>
+                <li className="p-2" key={item.name}>
                   <Link
                     href={item.href}
                     className={cn(
@@ -115,6 +112,7 @@ export function Sidebar() {
                 </li>
               )
             })}
+             <SignOut />
           </ul>
         </div>
       </nav>

@@ -6,10 +6,10 @@
 :root {
   /* Couleurs principales basées sur le design fourni */
   --stock-primary: #2d5a3d; /* Vert principal du design */
-  --stock-primary-light: #3d7a4d;
+  --stock-primary-light: #578864;
   --stock-primary-dark: #1d4a2d;
   --stock-secondary: #f7f9fa;
-  --stock-accent: #4ade80;
+  --stock-accent: #dddddd;
 
   /* Variables système */
   --background: oklch(1 0 0);
@@ -19,6 +19,8 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: var(--stock-primary);
+  --primary-light: var(--stock-primary-light);
+  --primary-dark: var(--stock-primary-dark);
   --primary-foreground: oklch(0.985 0 0);
   --secondary: var(--stock-secondary);
   --secondary-foreground: oklch(0.205 0 0);
@@ -63,6 +65,8 @@
   --popover: oklch(0.145 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: var(--stock-primary);
+  --primary-light: var(--stock-primary-light);
+  --primary-dark: var(--stock-primary-dark);
   --primary-foreground: oklch(0.145 0 0);
   --secondary: var(--stock-secondary);
   --secondary-foreground: oklch(0.985 0 0);

@@ -8,9 +8,17 @@ import { CategoryChart } from "@/components/charts/category-chart"
 import { ActivityFeed } from "@/components/dashboard/activity-feed"
 import { QuickActions } from "@/components/dashboard/quick-actions"
 import { Package, Euro, TrendingUp, AlertTriangle, Plus, FileDown } from "lucide-react"
+import { auth } from "@/auth"
+import { redirect } from "next/navigation"
 
 export default async function DashboardPage() {
   const stats = await getDashboardStats()
+
+  const session = await auth()
+
+  if (!session) {
+    redirect("/connexion")
+  }
 
   return (
     <DashboardLayout title="Tableau de Bord" subtitle="Planifiez, priorisez et gérez votre stock avec facilité.">
