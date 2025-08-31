@@ -128,15 +128,15 @@ export function SaleForm({ products }: SaleFormProps) {
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Coût total:</span>
-                <span className="font-medium">{totalBuy.toLocaleString("fr-FR")} €</span>
+                <span className="font-medium">{totalBuy.toLocaleString("fr-FR")} MAD</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Prix de vente:</span>
-                <span className="font-medium">{totalSell.toLocaleString("fr-FR")} €</span>
+                <span className="font-medium">{totalSell.toLocaleString("fr-FR")} MAD</span>
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span>Bénéfice:</span>
-                <span className="text-green-600">+{totalProfit.toLocaleString("fr-FR")} €</span>
+                <span className="text-green-600">+{totalProfit.toLocaleString("fr-FR")} MAD</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Marge:</span>
@@ -185,7 +185,7 @@ export function SaleForm({ products }: SaleFormProps) {
                   .filter((product) => product.stock_qty > 0)
                   .map((product) => (
                     <SelectItem key={product.id} value={product.id}>
-                      {product.name} - Stock: {product.stock_qty} - {product.buy_price.toLocaleString("fr-FR")} €
+                      {product.name} - Stock: {product.stock_qty} - {product.buy_price.toLocaleString("fr-FR")} MAD
                     </SelectItem>
                   ))}
               </SelectContent>
@@ -232,7 +232,7 @@ export function SaleForm({ products }: SaleFormProps) {
                             <p className="text-sm text-muted-foreground">Stock: {item.product.stock_qty}</p>
                           </div>
                         </TableCell>
-                        <TableCell>{item.product.buy_price.toLocaleString("fr-FR")} €</TableCell>
+                        <TableCell>{item.product.buy_price.toLocaleString("fr-FR")} MAD</TableCell>
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <Button
@@ -265,11 +265,11 @@ export function SaleForm({ products }: SaleFormProps) {
                             className="w-24"
                           />
                         </TableCell>
-                        <TableCell className="font-medium">{totalItemSell.toLocaleString("fr-FR")} €</TableCell>
+                        <TableCell className="font-medium">{totalItemSell.toLocaleString("fr-FR")} MAD</TableCell>
                         <TableCell>
                           <span className={itemProfit >= 0 ? "text-green-600" : "text-red-600"}>
                             {itemProfit >= 0 ? "+" : ""}
-                            {itemProfit.toLocaleString("fr-FR")} €
+                            {itemProfit.toLocaleString("fr-FR")} MAD
                           </span>
                         </TableCell>
                         <TableCell>

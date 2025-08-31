@@ -5,19 +5,44 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { ArrowLeft, Save, Package } from "lucide-react"
-import { useActionState } from "react"
-import { createProduct } from "@/lib/actions"
+import { useActionState, useEffect } from "react"
+import { createProduct, updateProduct } from "@/lib/actions/product-actions"
 import Link from "next/link"
+import { Product } from "@/lib/actions/product-actions"
+import { useRouter } from "next/navigation"
 
 const initialState = {
   success: false,
   error: undefined,
 }
 
-export function ProductForm() {
-  const [state, formAction] = useActionState(createProduct, initialState)
+interface ProductFormProps {
+  product?: Product
+  isEditing?: boolean
+}
+
+export function ProductForm({ product, isEditing = false }: ProductFormProps) {
+  const router = useRouter()
+  
+  // Use different actions based on whether we're editing or creating
+  const actionToUse = isEditing && product 
+    ? updateProduct.bind(null, product.id)
+    : createProduct
+
+  const [state, formAction] = useActionState(actionToUse, initialState)
+
+  // Handle successful form submission
+  useEffect(() => {
+    if (state.success) {
+      // Show success message briefly, then redirect
+      const timer = setTimeout(() => {
+        router.push("/produits")
+      }, 1500) // 1.5 seconds delay to show success message
+
+      return () => clearTimeout(timer)
+    }
+  }, [state.success, router])
 
   return (
     <div className="space-y-6 w-full">
@@ -29,12 +54,19 @@ export function ProductForm() {
           </Button>
         </Link>
         <div>
-          <h1 className="text-2xl font-bold">Nouveau Produit</h1>
-          <p className="text-muted-foreground">Remplissez les informations du produit</p>
+          <h1 className="text-2xl font-bold">
+            {isEditing ? "Modifier le Produit" : "Nouveau Produit"}
+          </h1>
+          <p className="text-muted-foreground">
+            {isEditing 
+              ? "Modifiez les informations du produit" 
+              : "Remplissez les informations du produit"
+            }
+          </p>
         </div>
       </div>
 
-      {/* Formulaire */}
+      {/* Form */}
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
@@ -45,75 +77,68 @@ export function ProductForm() {
         <CardContent>
           <form action={formAction} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Nom du produit */}
+              {/* Product name */}
               <div className="space-y-2">
                 <Label htmlFor="name">Nom du produit *</Label>
-                <Input id="name" name="name" placeholder="Ex: Ordinateur Portable Dell" required />
+                <Input 
+                  id="name" 
+                  name="name" 
+                  placeholder="Ex: Ordinateur Portable Dell" 
+                  defaultValue={product?.name || ""}
+                  required 
+                />
               </div>
 
-              {/* Catégorie */}
+              {/* Buy price */}
               <div className="space-y-2">
-                <Label htmlFor="category">Catégorie</Label>
-                <Select name="category">
-                  <SelectTrigger>
-                    <SelectValue placeholder="Sélectionner une catégorie" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="informatique">Informatique</SelectItem>
-                    <SelectItem value="accessoires">Accessoires</SelectItem>
-                    <SelectItem value="telephonie">Téléphonie</SelectItem>
-                    <SelectItem value="audio">Audio</SelectItem>
-                    <SelectItem value="stockage">Stockage</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Description */}
-            <div className="space-y-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                name="description"
-                placeholder="Description détaillée du produit..."
-                rows={3}
-              />
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Prix d'achat */}
-              <div className="space-y-2">
-                <Label htmlFor="buy_price">Prix d'achat (€) *</Label>
-                <Input id="buy_price" name="buy_price" type="number" step="0.01" min="0" placeholder="0.00" required />
-              </div>
-
-              {/* Quantité initiale */}
-              <div className="space-y-2">
-                <Label htmlFor="stock_qty">Quantité initiale *</Label>
-                <Input id="stock_qty" name="stock_qty" type="number" min="0" placeholder="0" required />
-              </div>
-
-              {/* Seuil d'alerte */}
-              <div className="space-y-2">
-                <Label htmlFor="min_stock_alert">Seuil d'alerte</Label>
-                <Input
-                  id="min_stock_alert"
-                  name="min_stock_alert"
-                  type="number"
-                  min="0"
-                  placeholder="10"
-                  defaultValue="10"
+                <Label htmlFor="buy_price">Prix d'achat (MAD) *</Label>
+                <Input 
+                  id="buy_price" 
+                  name="buy_price" 
+                  type="number" 
+                  step="0.01" 
+                  min="0" 
+                  placeholder="0.00" 
+                  defaultValue={product?.buyPrice?.toString() || ""}
+                  required 
                 />
               </div>
             </div>
 
-            {/* Code-barres */}
-            <div className="space-y-2">
-              <Label htmlFor="barcode">Code-barres (optionnel)</Label>
-              <Input id="barcode" name="barcode" placeholder="Ex: 1234567890123" />
+            <div className="grid grid-cols-1 gap-6">
+              {/* Stock quantity */}
+              <div className="space-y-2">
+                <Label htmlFor="stock_qty">Quantité en stock *</Label>
+                <Input 
+                  id="stock_qty" 
+                  name="stock_qty" 
+                  type="number" 
+                  min="0" 
+                  placeholder="0" 
+                  defaultValue={product?.stockQty?.toString() || ""}
+                  required 
+                />
+                {isEditing && (
+                  <p className="text-sm text-muted-foreground">
+                    Note: Modifier cette valeur créera un mouvement de stock automatiquement
+                  </p>
+                )}
+              </div>
+
+              {/* Description */}
+              <div className="space-y-2">
+                <Label htmlFor="description">Description</Label>
+                <Textarea
+                  id="description"
+                  name="description"
+                  placeholder="Description détaillée du produit..."
+                  rows={3}
+                  defaultValue={product?.description || ""}
+                />
+              </div>
             </div>
 
-            {/* Messages d'erreur/succès */}
+            {/* Error/Success messages */}
             {state.error && (
               <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
                 <p className="text-sm text-destructive">{state.error}</p>
@@ -122,15 +147,17 @@ export function ProductForm() {
 
             {state.success && (
               <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-sm text-green-600">Produit créé avec succès !</p>
+                <p className="text-sm text-green-600">
+                  {isEditing ? "Produit mis à jour avec succès ! Redirection..." : "Produit créé avec succès ! Redirection..."}
+                </p>
               </div>
             )}
 
             {/* Actions */}
             <div className="flex gap-4 pt-4">
-              <Button type="submit" className="gap-2">
+              <Button type="submit" className="gap-2" disabled={state.success}>
                 <Save className="w-4 h-4" />
-                Enregistrer le produit
+                {isEditing ? "Mettre à jour" : "Enregistrer le produit"}
               </Button>
               <Link href="/produits">
                 <Button type="button" variant="outline">
@@ -141,6 +168,39 @@ export function ProductForm() {
           </form>
         </CardContent>
       </Card>
+
+      {/* Product info for editing */}
+      {isEditing && product && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Informations Système</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="font-medium text-muted-foreground">Créé le:</span>
+                <p>{new Date(product.createdAt).toLocaleDateString("fr-FR", {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</p>
+              </div>
+              <div>
+                <span className="font-medium text-muted-foreground">Dernière modification:</span>
+                <p>{new Date(product.updatedAt).toLocaleDateString("fr-FR", {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}</p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
     </div>
   )
 }

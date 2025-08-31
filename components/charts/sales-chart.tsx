@@ -32,7 +32,7 @@ export function SalesChart() {
                 borderRadius: "8px",
               }}
               formatter={(value: number, name: string) => [
-                `${value.toLocaleString("fr-FR")} €`,
+                `${value.toLocaleString("fr-FR")} MAD`,
                 name === "ventes" ? "Ventes" : "Profits",
               ]}
             />

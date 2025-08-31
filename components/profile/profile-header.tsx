@@ -98,7 +98,7 @@ export function ProfileHeader({ user, stats }: ProfileHeaderProps) {
               <p className="text-sm text-muted-foreground">Ventes réalisées</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">
-              <p className="text-2xl font-bold text-green-600">{stats.totalRevenue.toLocaleString("fr-FR")} €</p>
+              <p className="text-2xl font-bold text-green-600">{stats.totalRevenue.toLocaleString("fr-FR")} MAD</p>
               <p className="text-sm text-muted-foreground">Chiffre d'affaires</p>
             </div>
             <div className="text-center p-3 bg-muted/50 rounded-lg">

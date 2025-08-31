@@ -112,7 +112,7 @@ export function Sidebar() {
                 </li>
               )
             })}
-             <SignOut />
+            <div className="p-2"><SignOut /></div>
           </ul>
         </div>
       </nav>

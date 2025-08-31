@@ -7,7 +7,7 @@ const userActivities = [
     id: "1",
     type: "sale",
     message: "Vente réalisée - Ordinateur Portable Dell",
-    details: "Montant: 650 €, Client: Jean Dupont",
+    details: "Montant: 650 MAD, Client: Jean Dupont",
     timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // Il y a 2h
   },
   {
@@ -35,7 +35,7 @@ const userActivities = [
     id: "5",
     type: "sale",
     message: "Vente réalisée - Clavier Mécanique",
-    details: "Montant: 120 €, Client: Marie Martin",
+    details: "Montant: 120 MAD, Client: Marie Martin",
     timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // Hier
   },
   {

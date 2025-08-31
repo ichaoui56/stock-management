@@ -22,6 +22,9 @@ interface HeaderProps {
 
 export function Header({ title, subtitle }: HeaderProps) {
   const { data: session } = useSession()
+
+  console.log("User: " + session?.user?.name + session?.user?.email)
+
   const handleSignOut = async () => {
     await signOutAction()
   }

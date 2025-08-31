@@ -13,7 +13,7 @@ export default async function NewProductPage() {
 
   return (
     <DashboardLayout title="Nouveau Produit" subtitle="Ajoutez un nouveau produit à votre inventaire.">
-      <div className="max-w-2xl mx-auto">
+      <div className="mx-auto">
         <ProductForm />
       </div>
     </DashboardLayout>

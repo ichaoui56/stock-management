@@ -117,7 +117,7 @@ const mockActivityLog: ActivityLogEntry[] = [
     id: "1",
     type: "sale",
     message: "Vente réalisée - Ordinateur Portable Dell",
-    details: "Montant: 650 €, Bénéfice: 185 €",
+    details: "Montant: 650 MAD, Bénéfice: 185 MAD",
     user: "Admin Système",
     created_at: new Date(Date.now() - 7200000), // Il y a 2h
   },
@@ -133,7 +133,7 @@ const mockActivityLog: ActivityLogEntry[] = [
     id: "3",
     type: "product",
     message: "Nouveau produit créé - Casque Audio",
-    details: "Catégorie: Audio, Prix: 120 €",
+    details: "Catégorie: Audio, Prix: 120 MAD",
     user: "Admin Système",
     created_at: new Date(Date.now() - 21600000), // Il y a 6h
   },

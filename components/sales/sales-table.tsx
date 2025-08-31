@@ -76,9 +76,9 @@ export function SalesTable({ sales }: SalesTableProps) {
                         {sale.client_phone && <p className="text-sm text-muted-foreground">{sale.client_phone}</p>}
                       </div>
                     </TableCell>
-                    <TableCell className="font-medium">{sale.total_sell.toLocaleString("fr-FR")} €</TableCell>
+                    <TableCell className="font-medium">{sale.total_sell.toLocaleString("fr-FR")} MAD</TableCell>
                     <TableCell>
-                      <span className="font-medium text-green-600">+{sale.profit.toLocaleString("fr-FR")} €</span>
+                      <span className="font-medium text-green-600">+{sale.profit.toLocaleString("fr-FR")} MAD</span>
                     </TableCell>
                     <TableCell>{getStatusBadge(sale.status)}</TableCell>
                     <TableCell>

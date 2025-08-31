@@ -83,7 +83,7 @@ export async function signUpAction(prevState: FormState | null, formData: FormDa
     }
 
     // Redirect to signin page
-    redirect("/auth/sign-in?message=Account created successfully")
+    redirect("/connexion?message=Account created successfully")
   } catch (error) {
     if (error instanceof Error && error.message === "NEXT_REDIRECT") {
       throw error // Re-throw redirect errors

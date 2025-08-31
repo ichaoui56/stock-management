@@ -22,14 +22,14 @@ export function SalesStats({ sales }: SalesStatsProps) {
     },
     {
       title: "Chiffre d'Affaires",
-      value: `${totalRevenue.toLocaleString("fr-FR")} €`,
+      value: `${totalRevenue.toLocaleString("fr-FR")} MAD`,
       icon: Euro,
       color: "text-green-600",
       bgColor: "bg-green-100",
     },
     {
       title: "Bénéfices",
-      value: `${totalProfit.toLocaleString("fr-FR")} €`,
+      value: `${totalProfit.toLocaleString("fr-FR")} MAD`,
       icon: TrendingUp,
       color: "text-purple-600",
       bgColor: "bg-purple-100",

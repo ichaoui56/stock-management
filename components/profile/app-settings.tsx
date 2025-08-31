@@ -126,7 +126,7 @@ export function AppSettings() {
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="EUR">Euro (€)</SelectItem>
+                  <SelectItem value="EUR">Euro (MAD)</SelectItem>
                   <SelectItem value="USD">Dollar ($)</SelectItem>
                   <SelectItem value="GBP">Livre (£)</SelectItem>
                 </SelectContent>

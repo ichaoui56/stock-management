@@ -39,7 +39,7 @@ export default async function SignInPage() {
 
               <p className="text-center text-gray-600 dark:text-gray-300">
                 Vous n'avez pas de compte ?{" "}
-                <Link href="/auth/sign-up" className="text-primary hover:text-primary-light font-semibold">
+                <Link href="/inscription" className="text-primary hover:text-primary-light font-semibold">
                   S'inscrire
                 </Link>
               </p>

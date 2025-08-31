@@ -41,7 +41,7 @@ export default async function DashboardPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <StatCard
             title="Valeur du Stock"
-            value={`${stats.totalStockValue.toLocaleString("fr-FR")} €`}
+            value={`${stats.totalStockValue.toLocaleString("fr-FR")} MAD`}
             subtitle="Valeur totale des produits"
             variant="primary"
             icon={<Package className="w-6 h-6 text-primary-foreground" />}
@@ -54,7 +54,7 @@ export default async function DashboardPage() {
 
           <StatCard
             title="Chiffre d'Affaires"
-            value={`${stats.totalRevenue.toLocaleString("fr-FR")} €`}
+            value={`${stats.totalRevenue.toLocaleString("fr-FR")} MAD`}
             subtitle="Revenus totaux"
             icon={<Euro className="w-6 h-6 text-muted-foreground" />}
             trend={{
@@ -66,7 +66,7 @@ export default async function DashboardPage() {
 
           <StatCard
             title="Bénéfices"
-            value={`${stats.totalProfit.toLocaleString("fr-FR")} €`}
+            value={`${stats.totalProfit.toLocaleString("fr-FR")} MAD`}
             subtitle="Profits réalisés"
             icon={<TrendingUp className="w-6 h-6 text-muted-foreground" />}
             trend={{
@@ -116,8 +116,8 @@ export default async function DashboardPage() {
                         </p>
                       </div>
                       <div className="text-right">
-                        <p className="font-medium">{sale.total_sell.toLocaleString("fr-FR")} €</p>
-                        <p className="text-sm text-green-600">+{sale.profit.toLocaleString("fr-FR")} € profit</p>
+                        <p className="font-medium">{sale.total_sell.toLocaleString("fr-FR")} MAD</p>
+                        <p className="text-sm text-green-600">+{sale.profit.toLocaleString("fr-FR")} MAD profit</p>
                       </div>
                     </div>
                   ))
