@@ -1,6 +1,5 @@
-// app/produits/page.tsx
+// Updated page.tsx - remove ProductsHeader since it's now in ContentWrapper
 import { DashboardLayout } from "@/components/layout/dashboard-layout"
-import { ProductsHeader } from "@/components/products/products-header"
 import { ProductsContentWrapper } from "@/components/products/ProductsContentWrapper"
 import { auth } from "@/auth"
 import { redirect } from "next/navigation"
@@ -20,7 +19,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
     redirect("/connexion")
   }
 
-  const { search, stock, page, per_page } = await searchParams
+  const params = await searchParams
+  const { search, stock, page, per_page } = params
+
+  const pageNumber = page ? Math.max(1, parseInt(page)) : 1
+  const itemsPerPage = per_page ? Math.max(1, Math.min(100, parseInt(per_page))) : 10
 
   return (
     <DashboardLayout 
@@ -28,15 +31,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
       subtitle="Gérez votre inventaire et suivez vos stocks en temps réel."
     >
       <div className="space-y-6">
-        <ProductsHeader 
-          initialSearch={search}
-          initialStockFilter={stock}
-        />
         <ProductsContentWrapper 
           searchQuery={search} 
           stockFilter={stock}
-          page={page ? parseInt(page) : 1}
-          perPage={per_page ? parseInt(per_page) : 10}
+          page={pageNumber}
+          perPage={itemsPerPage}
         />
       </div>
     </DashboardLayout>

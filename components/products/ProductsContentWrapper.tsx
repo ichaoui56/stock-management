@@ -1,11 +1,12 @@
-// components/products/ProductsContentWrapper.tsx
+// Fixed ProductsContentWrapper.tsx
 import { Suspense } from "react"
 import { ProductsStats } from "@/components/products/products-stats"
 import { ProductsTable } from "@/components/products/products-table"
 import { ProductsPagination } from "@/components/products/ProductsPagination"
-import { getProductsPaginated, type PaginatedProducts } from "@/lib/actions/product-actions"
+import { getProductsPaginated, getProductStats, type PaginatedProducts } from "@/lib/actions/product-actions"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "../ui/skeleton"
+import { ProductsHeader } from "./products-header"
 
 type StockFilterType = 'in_stock' | 'low_stock' | 'out_of_stock' | undefined;
 
@@ -23,42 +24,59 @@ async function ProductsWrapper({
   page = 1,
   perPage = 10
 }: ProductsWrapperProps) {
+  const validPage = Math.max(1, page)
+  const validPerPage = Math.max(1, Math.min(100, perPage))
+
   // Get paginated products
   const paginatedData: PaginatedProducts = await getProductsPaginated({
-    page,
-    perPage,
+    page: validPage,
+    perPage: validPerPage,
     searchQuery: searchQuery?.trim(),
     stockFilter: (stockFilter === 'in_stock' || stockFilter === 'low_stock' || stockFilter === 'out_of_stock') 
       ? stockFilter as StockFilterType 
       : undefined
   })
 
+  // Get complete stats for export
+  const completeStats = await getProductStats({
+    searchQuery: searchQuery?.trim(),
+    stockFilter: stockFilter
+  })
+
   const { products, totalCount, totalPages, currentPage } = paginatedData
 
   return (
     <>
+      {/* Pass data to header for PDF export */}
+      <ProductsHeader 
+        initialSearch={searchQuery}
+        initialStockFilter={stockFilter}
+        currentProducts={products}
+        currentStats={completeStats}
+      />
       <ProductsStats 
         products={products} 
         totalCount={totalCount}
         currentFilters={{ searchQuery, stockFilter }}
       />
       <ProductsTable products={products} />
-      {totalPages > 1 && (
-        <ProductsPagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalCount={totalCount}
-          perPage={perPage}
-        />
-      )}
+      <ProductsPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalCount={totalCount}
+        perPage={validPerPage}
+      />
     </>
   )
 }
 
-// Main component with Suspense wrapper
+// Main component with Suspense wrapper and error boundary
 export function ProductsContentWrapper(props: ProductsWrapperProps) {
   return (
-    <Suspense fallback={<ProductsLoading />}>
+    <Suspense 
+      key={`${props.searchQuery}-${props.stockFilter}-${props.page}-${props.perPage}`}
+      fallback={<ProductsLoading />}
+    >
       <ProductsWrapper {...props} />
     </Suspense>
   )
